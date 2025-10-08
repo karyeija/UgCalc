@@ -13,7 +13,7 @@ class Buttons {
     '4',
     '5',
     '6',
-    'X',
+    'x',
 
     '1',
     '2',
@@ -31,9 +31,14 @@ class Buttons {
   ];
   static const List<String> topRowButtons = ["AC", "( )", "⌫", "%"];
   static const List<String> operatorButtons = ['+', '-', 'x', '÷'];
-  static const List<String> evalButton = ['='];
-  static const List<String> delButton = ['⌫'];
-  static const List<String> clearAllButton = ['AC'];
+  static const String evalButton = '=';
+  static const String delButton = '⌫';
+  static const String clearAllButton = 'AC';
+  static const String dotButton = '.';
+  static const String quotientButton = '÷';
+  static const String sumButton = '+';
+  static const String differenceButton = '-';
+  static const String posNegButton = '±';
   static const List<String> bottomRowButtons = ['±', '.'];
   static const List<String> digitButtons = [
     '1',

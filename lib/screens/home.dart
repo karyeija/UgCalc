@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ugcalc/screens/utils/functionality.dart';
+import 'package:ugcalc/screens/utils/numberformat.dart';
 import 'package:ugcalc/widgets/buttons.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,8 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  NumberFormat fd = NumberFormat.decimalPattern();
+  NumberFormat fr = NumberFormat.decimalPatternDigits();
+
   @override
   Widget build(BuildContext context) {
+    // var formater = NumberFormat('#,###.0');
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       // appBar: AppBar(title: Text(widget.title)),
@@ -22,11 +28,19 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.end,
 
           children: [
+            TextFormField(
+              maxLines: 4,
+              controller: Functionality.input,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(border: OutlineInputBorder()),
+              style: TextStyle(fontSize: 263),
+            ),
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               reverse: true,
               child: Text(
-                Functionality.input,
+                safeFormatInput(Functionality.input.text),
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
             ),

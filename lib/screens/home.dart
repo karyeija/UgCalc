@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ugcalc/screens/utils/functionality.dart';
 import 'package:ugcalc/widgets/buttons.dart';
-import 'package:ugcalc/widgets/custom_gridview.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+  const HomePage({super.key /* required this.title */});
+  // final String title;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,80 +13,71 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      // appBar: AppBar(title: Text(widget.title)),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+
           children: [
-            SizedBox(
-              height: 200,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                child: Column(
-                  children: [
-                    TextField(
-                      // maxLines: 5,
-                      // controller: calController,
-                      keyboardType: TextInputType.none,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.grey[300], // light gray background
-                      ),
-                    ),
-                    TextField(
-                      maxLines: 1,
-                      keyboardType: TextInputType.none,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.grey[300], // light gray background
-                      ),
-                    ),
-                  ],
-                ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              reverse: true,
+              child: Text(
+                Functionality.input,
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
             ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
-                  gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCountAndCentralizedLastElement(
-                        itemCount: Buttons.allButtons.length,
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 1.0,
-                      ),
-                  itemCount: Buttons.allButtons.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      color: Colors.blueAccent,
-                      child: Center(
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          child: Text(
-                            Buttons.allButtons[index],
-                            style: TextStyle(fontSize: 30),
+            SizedBox(height: 20),
+            Wrap(
+              children: Buttons.allButtons
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              Buttons.evalButton.contains(e)
+                                  ? screenWidth * 0.02
+                                  : screenWidth * 0.1,
+                            ),
+                          ),
+                          fixedSize: Buttons.evalButton.contains(e)
+                              ? Size(screenWidth * 0.4, 80)
+                              : Size(screenWidth * 0.2, 80),
+                          backgroundColor: Buttons.topRowButtons.contains(e)
+                              ? Colors.black
+                              : Buttons.digitButtons.contains(e)
+                              ? const Color.fromARGB(255, 233, 143, 7)
+                              : Buttons.evalButton.contains(e)
+                              ? Colors.blue[900]
+                              : Buttons.bottomRowButtons.contains(e)
+                              ? Colors.pink
+                              : Colors.green,
+                        ),
+                        onPressed: () {
+                          Functionality.appendInput(e, setState);
+                        },
+                        child: Text(
+                          e,
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Buttons.delButton.contains(e)
+                                ? Colors.red
+                                : Colors.white,
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
+                    ),
+                  )
+                  .toList(),
             ),
           ],
         ),
       ),
-      // floatingActionButton: customButton(
-      //   onpress: _anyFunc,
-      //   icon: Icons.abc,
-      //   // onpress:
-      // ),
     );
   }
 }

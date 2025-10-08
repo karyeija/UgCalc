@@ -14,12 +14,8 @@ class UgaKode extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const HomePage(title: 'Home'),
+      theme: ThemeData.dark(),
+      home: HomePage(/*title: 'Home'*/),
     );
   }
 }
-
-
